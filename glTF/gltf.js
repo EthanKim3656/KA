@@ -17,16 +17,21 @@ export default class Gltf {
     this.file = /[^/]*\.[^]+$/.exec(file)[0];
   }
 
-  async initialize() {
+  async initializeFetch() {
     await this.fetchJson();
     await this.fetchBuffers();
     await this.fetchImages();
-    const {
-      json
-    } = this;
+  }
+
+  initializeData() {
     this.meshes = new Array(json.meshes ?.length).fill().map(i => ({}));
     this.skins = new Array(json.skins ?.length).fill().map(i => ({}));
     this.nodes = new Array(json.nodes ?.length).fill().map(i => ({}));
+  }
+
+  async initializeAll() {
+    await initializeFetch();
+    initializeData();
   }
 
   async fetchJson() {
