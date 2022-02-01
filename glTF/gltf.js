@@ -24,14 +24,17 @@ export default class Gltf {
   }
 
   initializeData() {
+    const {
+      json
+    } = this;
     this.meshes = new Array(json.meshes ?.length).fill().map(i => ({}));
     this.skins = new Array(json.skins ?.length).fill().map(i => ({}));
     this.nodes = new Array(json.nodes ?.length).fill().map(i => ({}));
   }
 
   async initializeAll() {
-    await initializeFetch();
-    initializeData();
+    await this.initializeFetch();
+    this.initializeData();
   }
 
   async fetchJson() {
@@ -224,7 +227,7 @@ export default class Gltf {
             console.error("Component type: " + componentType);
             break;
         }
-        componentStride || = dataTypeSize;
+        componentStride ||= dataTypeSize;
         const length = (count - 1) * componentStride + dataTypeSize;
         const arrayBufferView = new arrayBufferViewType(
           buffer,
